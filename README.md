@@ -28,10 +28,6 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Configure environment variables
-
-Create a `.env` file in the project's root directory, see `.env.example`
-
 ### 4. Database Setup
 
 Create a datbase for example: `ragdb` from psql
@@ -82,18 +78,19 @@ Back inside psql:
 CREATE EXTENSION IF NOT EXISTS vector;
 ```
 
-#### Create the database schema
+### 5. Configure environment variables
 
-To create the database:
+Create a `.env` file in the project's root directory, see `.env.example`
+
+### 6. Run migration
+
+From the project root:
 
 ```bash
-cd scripts
-PYTHONPATH=.. python3 init_db.py
+
+aelmbic upgrade head
+
 ```
-
-Ensure your `DATABASE_URL` is set properly before running these commands.
-
----
 
 ### Run the application
 
@@ -105,5 +102,7 @@ uvicorn app.main:app --reload
 
 Swagger Docs at
 **[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)**
+
+Booting up the application usually takes a bit time as the sententence transformer `BAAI/bge-small-en-v1.5` is downloaded each time.
 
 ---
