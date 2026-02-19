@@ -18,7 +18,7 @@ Create `.env` file and add variables just like in `.env.example`
 #### 2. Build and Start the Application
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 #### 3. Access the Application
@@ -33,19 +33,19 @@ Once the containers are running:
 Stop the application:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 Restart services:
 
 ```bash
-docker-compose restart
+docker compose restart
 ```
 
 Access PostgreSQL inside a container:
 
 ```bash
-docker-compose exec postgres psql -U raguser -d ragdb
+docker compose exec postgres psql -U raguser -d ragdb
 ```
 
 #### 5. Database Migrations
@@ -53,7 +53,7 @@ docker-compose exec postgres psql -U raguser -d ragdb
 Migrations are automatically run when the application starts. If you need to run them manually:
 
 ```bash
-docker-compose exec app alembic upgrade head
+docker compose exec app alembic upgrade head
 ```
 
 ## Local Setup (Alternative)
