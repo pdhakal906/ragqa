@@ -1,0 +1,41 @@
+# Git
+
+.git
+.gitignore
+
+# Python
+
+**pycache**
+_.pyc
+_.pyo
+\*.pyd
+.Python
+env/
+venv/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+
+.vscode
+.idea
+_.swp
+_.swo
+\*~
+
+# OS
+
+.DS_Store
+.env
+
+# Project
+
+.env.example
+README.md
+alembic/
+scripts/

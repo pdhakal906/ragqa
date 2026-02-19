@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  # PostgreSQL Database Service
+  postgres:
+    image: pgvector/pgvector:pg18
+    container_name: ragqa_postgres
+    environment:
+      POSTGRES_USER: raguser
+      POSTGRES_PASSWORD: RagAdmin
+      POSTGRES_DB: rag
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ./init_db.sh:/docker-entrypoint-initdb.d/init.sh
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U raguser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ragqa_network
+
+  # FastAPI Application Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ragqa_app
+    environment:
+      DATABASE_URL: postgresql://raguser:RagAdmin@postgres:5432/rag
+      MISTRAL_API_KEY: ${MISTRAL_API_KEY}
+    ports:
+      - "${APP_PORT}:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    networks:
+      - ragqa_network
+    command: >
+      sh -c "alembic upgrade head &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+
+volumes:
+  postgres_data:
+
+networks:
+  ragqa_network:
+    driver: bridge

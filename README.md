@@ -2,7 +2,61 @@
 
 This project is a **FastAPI** application using **Postgres** as the database.
 
-## Prerequisites
+## Docker Setup
+
+### Prerequisites for Docker
+
+- Docker Engine
+- Docker Compose
+
+### Setup with Docker
+
+#### 1. Configure environment variables
+
+Create `.env` file and add variables just like in `.env.example`
+
+#### 2. Build and Start the Application
+
+```bash
+docker-compose up --build
+```
+
+#### 3. Access the Application
+
+Once the containers are running:
+
+- **API Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Health Check**: [http://localhost:8000/health](http://localhost:8000/health)
+
+#### 4. Useful Docker Commands
+
+Stop the application:
+
+```bash
+docker-compose down
+```
+
+Restart services:
+
+```bash
+docker-compose restart
+```
+
+Access PostgreSQL inside a container:
+
+```bash
+docker-compose exec postgres psql -U raguser -d ragdb
+```
+
+#### 5. Database Migrations
+
+Migrations are automatically run when the application starts. If you need to run them manually:
+
+```bash
+docker-compose exec app alembic upgrade head
+```
+
+## Local Setup (Alternative)
 
 Before you begin, make sure you have the following installed:
 
